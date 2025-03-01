@@ -1,0 +1,153 @@
+<form class="hero-form" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-title>Agregar Superhéroe</mat-card-title>
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Superhéroe</mat-label>
+          <input matInput formControlName="name" placeholder="Ej. Spider-Man" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Alter ego</mat-label>
+          <input matInput formControlName="alter_ego" placeholder="Ej. Peter Parker" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Primera aparición</mat-label>
+          <input matInput formControlName="first_appearance" placeholder="Ej. Amazing Fantasy #15" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Personajes</mat-label>
+          <input matInput formControlName="characters" placeholder="Ej. Peter Parker, Miles Morales" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Creador</mat-label>
+          <mat-select formControlName="creator" required>
+            <mat-option *ngFor="let pub of publishers" [value]="pub.id">{{ pub.desc }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Imagen Alternativa</mat-label>
+          <input matInput type="text" formControlName="alt_img" placeholder="URL de la imagen">
+        </mat-form-field>
+      </div>
+
+      <div class="image-container">
+        <mat-card>
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Imagen del héroe" mat-card-image>
+        </mat-card>
+      
+        <input *ngIf="!heroForm.get('id')?.value" type="file" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-flat-button color="warn" type="button" (click)="onSubmit()">
+        <mat-icon>cancel</mat-icon> Borrar
+      </button>
+
+      <button mat-flat-button color="primary" type="submit">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+
+<style>
+ .hero-form {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+mat-card {
+  max-width: 750px;
+  width: 100%;
+  padding: 25px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+mat-card-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #424242;
+}
+
+mat-card-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-container mat-card {
+  max-width: 180px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button {
+  margin-left: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+button[color="warn"] {
+  background-color: #d32f2f;
+  color: white;
+}
+
+button[color="warn"]:hover {
+  background-color: #b71c1c;
+}
+
+button[color="primary"] {
+  background-color: #1976d2;
+  color: white;
+}
+
+button[color="primary"]:hover {
+  background-color: #1565c0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  mat-card-content {
+    grid-template-columns: 1fr;
+  }
+
+  .form-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>

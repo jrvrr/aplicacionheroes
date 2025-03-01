@@ -1,0 +1,50 @@
+<div class="flex flex-column p-2">
+
+    <h3>Buscador</h3>
+
+    <mat-form-field>
+        <mat-label>Buscador de héroes</mat-label>
+        <input type="text" matInput [formControl]="searchInput" (input)="searchHero()" [matAutocomplete]="auto" />
+
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelectedOption( $event )">
+            <mat-option *ngFor="let hero of heroes" [value]="hero">
+                {{ hero.superhero }}
+            </mat-option>
+
+            <mat-option *ngIf="heroes.length === 0 && searchInput.value && searchInput.value.length > 0" value="">
+                No se encontró nada con el término {{ searchInput.value }}
+            </mat-option>
+        </mat-autocomplete>
+
+    </mat-form-field>
+
+    <mat-card *ngIf="selectedHero" class="hero-card">
+        <mat-card-header>
+            <mat-card-title>{{ selectedHero.superhero }}</mat-card-title>
+            <mat-card-subtitle>{{ selectedHero.publisher }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="selectedHero.alt_img" alt="{{ selectedHero.superhero }}" />
+        <mat-card-content>
+            <p><strong>Nombre real:</strong> {{ selectedHero.alter_ego }}</p>
+            <p><strong>Primera aparición:</strong> {{ selectedHero.first_appearance }}</p>
+        </mat-card-content>
+    </mat-card>
+
+</div>
+
+<style>
+    .hero-card {
+        max-width: 400px;
+        margin: 30px auto;
+        text-align: center;
+        border-radius: 12px;
+    }
+
+    .hero-card img {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 35px;
+        text-align: left;
+    }
+</style>

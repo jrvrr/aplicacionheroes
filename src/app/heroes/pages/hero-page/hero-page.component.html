@@ -1,0 +1,123 @@
+<mat-card class="hero-card" *ngIf="hero">
+  <div class="hero-container">
+    <div class="hero-image-container">
+      <img mat-card-image [src]="hero | heroImage" [alt]="hero.superhero" class="hero-image">
+    </div>
+
+    <div class="hero-info">
+      <mat-card-header>
+        <mat-card-title>{{ hero.superhero }}</mat-card-title>
+        <mat-card-subtitle>{{ hero.alter_ego }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="hero-content">
+        <h5>{{ hero.publisher }}</h5>
+        <p>
+          <strong>Primera aparición:</strong> {{ hero.first_appearance }}
+          <br>
+          <strong>Personajes:</strong> {{ hero.characters }}
+        </p>
+      </mat-card-content>
+
+      <!-- Botón de Editar -->
+      <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="editHero()">
+          <mat-icon>edit</mat-icon> Editar
+        </button>
+        
+      </mat-card-actions>
+
+    </div>
+  </div>
+</mat-card>
+
+<style>
+  /* Estilos generales de la tarjeta */
+  .hero-card {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.11);
+  }
+
+  /* Contenedor principal */
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Imagen */
+  .hero-image-container {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  /* Información */
+  .hero-info {
+    width: 100%;
+    padding: 20px;
+  }
+
+  mat-card-header {
+    height: 70px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  mat-card-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  mat-card-subtitle {
+    font-size: 1.8rem;
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+
+  .hero-content {
+    padding: 20px;
+  }
+
+  .hero-content h5 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .hero-content p {
+    font-size: 1.6rem;
+    line-height: 1.8;
+  }
+
+  /* Diseño responsivo */
+  @media (min-width: 768px) {
+    .hero-container {
+      flex-direction: row;
+      text-align: center;
+    }
+
+    .hero-info {
+      text-align: center;
+    }
+
+    .hero-card {
+      margin: 80px auto;
+      padding: 50px;
+    }
+  }
+</style>
