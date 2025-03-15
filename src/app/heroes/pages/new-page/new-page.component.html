@@ -1,153 +1,152 @@
-<form class="hero-form" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-title>Agregar Superhéroe</mat-card-title>
-    <mat-card-content>
-      <div class="form-container">
-        <mat-form-field appearance="outline">
-          <mat-label>Superhéroe</mat-label>
-          <input matInput formControlName="name" placeholder="Ej. Spider-Man" required>
-        </mat-form-field>
+<div class="fondo">
+  <form class="form-container" [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-title>Editar / Agregar héroe {{ heroForm.value.superhero }}</mat-card-title>
+      <mat-card-content class="form-content">
+        
+        <div class="form-columns">
+          
+          <div class="form-fields">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre héroe</mat-label>
+              <input matInput formControlName="superhero" required>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Alter ego</mat-label>
-          <input matInput formControlName="alter_ego" placeholder="Ej. Peter Parker" required>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Alter ego</mat-label>
+              <input matInput formControlName="alter_ego" required>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Primera aparición</mat-label>
-          <input matInput formControlName="first_appearance" placeholder="Ej. Amazing Fantasy #15" required>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Primera aparición</mat-label>
+              <input matInput formControlName="first_appearance" required>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Personajes</mat-label>
-          <input matInput formControlName="characters" placeholder="Ej. Peter Parker, Miles Morales" required>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Personajes</mat-label>
+              <input matInput formControlName="characters" required>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Creador</mat-label>
-          <mat-select formControlName="creator" required>
-            <mat-option *ngFor="let pub of publishers" [value]="pub.id">{{ pub.desc }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Editorial</mat-label>
+              <mat-select formControlName="publisher">
+                <mat-option *ngFor="let pub of publishers" [value]="pub.id">{{ pub.desc }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Imagen Alternativa</mat-label>
-          <input matInput type="text" formControlName="alt_img" placeholder="URL de la imagen">
-        </mat-form-field>
-      </div>
+            <mat-form-field appearance="fill">
+              <mat-label>Imagen Alternativa</mat-label>
+              <input matInput type="text" formControlName="alt_img" placeholder="URL de la imagen">
+            </mat-form-field>
 
-      <div class="image-container">
-        <mat-card>
-          <img *ngIf="imagePreview" [src]="imagePreview" alt="Imagen del héroe" mat-card-image>
-        </mat-card>
-      
-        <input *ngIf="!heroForm.get('id')?.value" type="file" (change)="onFileSelected($event)" accept="image/*">
-      </div>
-    </mat-card-content>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*">
+          </div>
 
-    <mat-card-actions>
-      <button mat-flat-button color="warn" type="button" (click)="onSubmit()">
-        <mat-icon>cancel</mat-icon> Borrar
-      </button>
+          <!-- Columna derecha: Imagen -->
+          <div class="image-container">
+            <mat-card>
+              <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa" mat-card-image class="hero-image">
+            </mat-card>
+          </div>
 
-      <button mat-flat-button color="primary" type="submit">
-        <mat-icon>save</mat-icon> Guardar
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+        </div>
+      </mat-card-content>
 
+      <mat-card-actions class="action-buttons">
+        <!-- Mostrar el botón de Borrar solo si el héroe tiene ID (estamos editando) -->
+        <button *ngIf="heroForm.get('id')?.value" (click)="onDeleteHero()" mat-flat-button type="button">
+          <mat-icon>delete</mat-icon> Borrar
+        </button>
+        
+        <button mat-flat-button type="submit">
+          <mat-icon>save</mat-icon> Guardar
+        </button>
+        <button mat-flat-button color="warn" [routerLink]="['/heroes']">
+          <mat-icon>cancel</mat-icon> Cancelar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
 
 <style>
- .hero-form {
+  .fondo {
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2c3e50, #050505);
   padding: 20px;
 }
 
-mat-card {
-  max-width: 750px;
+.form-container {
   width: 100%;
-  padding: 25px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+}
+
+mat-card {
+  background: #ffffff;
+  padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 mat-card-title {
-  font-size: 22px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 15px;
-  color: #424242;
+  text-align: center;
+  color: #2c3e50;
 }
 
-mat-card-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 25px;
-  align-items: start;
-}
-
-.form-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.full-width {
-  grid-column: span 2;
-}
-
-.image-container {
+.form-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
-.image-container mat-card {
-  max-width: 180px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-mat-card-actions {
+.form-columns {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .form-columns {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .form-fields {
+    width: 60%;
+  }
+
+  .image-container {
+    width: 35%;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #4ca1af;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
 button {
-  margin-left: 10px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 14px;
 }
 
-button[color="warn"] {
-  background-color: #d32f2f;
-  color: white;
-}
-
-button[color="warn"]:hover {
-  background-color: #b71c1c;
-}
-
-button[color="primary"] {
-  background-color: #1976d2;
-  color: white;
-}
-
-button[color="primary"]:hover {
-  background-color: #1565c0;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-  mat-card-content {
-    grid-template-columns: 1fr;
-  }
-
-  .form-container {
-    grid-template-columns: 1fr;
-  }
+mat-icon {
+  margin-right: 5px;
 }
 
 </style>

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { Hero } from '../../interfaces/hero.interfaces';
 import { HeroesService } from '../../services/heroes.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-hero-page',
@@ -15,6 +17,7 @@ export class HeroPageComponent implements OnInit {
   public hero?: Hero;
 
   constructor(
+    private location: Location,
     private heroesService: HeroesService, 
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -39,4 +42,9 @@ export class HeroPageComponent implements OnInit {
       this.router.navigate(['/edit-hero', this.hero.id]); // Redirige a la pantalla de edición con el ID del héroe
     }
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+  
 }
