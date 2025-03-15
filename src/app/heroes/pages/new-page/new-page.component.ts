@@ -31,8 +31,8 @@ export class NewPageComponent implements OnInit {
     { id: 'MARVEL Comics', desc: 'MARVEL - Comics' }
   ];
 
-  imagePreview: string | null = 'assets/usuario.png'; // Imagen por defecto
-  private heroId: string | null = null; // Para almacenar el ID del héroe
+  imagePreview: string | null = 'assets/usuario.png';
+  private heroId: string | null = null; 
 
   constructor(
     private heroesService: HeroesService,
@@ -46,7 +46,6 @@ export class NewPageComponent implements OnInit {
     // Obtener el ID de la URL
     this.heroId = this.route.snapshot.paramMap.get('id');
 
-    // Si hay un ID, cargar los datos del héroe
     if (this.heroId) {
       this.loadHeroData(this.heroId);
     }

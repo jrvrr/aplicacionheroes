@@ -1,25 +1,32 @@
 <div class="flex flex-column">
     <span class="text-lg mb-4">Inicio de sesión</span>
 
-    <mat-form-field>
-        <mat-label>
-            Usuario
-        </mat-label>
-        <input type="text" matInput placeholder="Nombre de usuario">
-    </mat-form-field>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input type="text" matInput formControlName="usuario" placeholder="Nombre de usuario">
+            <mat-error *ngIf="loginForm.get('usuario')?.invalid && loginForm.get('usuario')?.touched">
+                <span *ngIf="loginForm.get('usuario')?.hasError('required')">El usuario es obligatorio</span>
+                <span *ngIf="loginForm.get('usuario')?.hasError('minlength')">Mínimo 3 caracteres</span>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>
-            Contraseña
-        </mat-label>
-        <input type="password" matInput placeholder="Contraseña">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Contraseña">
+            <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <span *ngIf="loginForm.get('password')?.hasError('required')">La contraseña es obligatoria</span>
+                <span *ngIf="loginForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</span>
+            </mat-error>
+        </mat-form-field>
 
-    <button mat-button mat-flat-button (click)="onLogin()">
-        <mat-icon>login</mat-icon>
-        Ingresar
-    </button>
+        <button mat-button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">
+            <mat-icon>login</mat-icon>
+            Ingresar
+        </button>
+    </form>
 
     <div class="flex justify-content-end mt-5">
-        <a routerLink="/auth/new-account">¿Ya tienes una cuenta? Regístrate</a>
+        ¿No tienes una cuenta? <a routerLink="/auth/new-account">Regístrate</a>
     </div>
+</div>

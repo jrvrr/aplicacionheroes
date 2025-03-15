@@ -39,7 +39,7 @@ export class HeroPageComponent implements OnInit {
 
   editHero(): void {
     if (this.hero) {
-      this.router.navigate(['/edit-hero', this.hero.id]); // Redirige a la pantalla de edición con el ID del héroe
+      this.router.navigate(['/edit-hero', this.hero.id]);
     }
   }
 

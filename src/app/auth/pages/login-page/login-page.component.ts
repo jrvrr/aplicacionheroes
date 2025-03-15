@@ -1,25 +1,33 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
-  standalone: false,
-  
   templateUrl: './login-page.component.html',
-  styles: ``
+  standalone: false
 })
 export class LoginPageComponent {
+  loginForm: FormGroup;
 
   constructor(
-    private authSevice: AuthService,
+    private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router
-  ){}
-
-  onLogin(): void{
-    this.authSevice.login('michellevg@gmail.com', '123456')
-    .subscribe(user =>{
-      this.router.navigate(['/'])
+  ) {
+    this.loginForm = this.fb.group({
+      usuario: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const { usuario, password } = this.loginForm.value;
+      this.authService.login(usuario, password).subscribe(user => {
+        this.router.navigate(['/']);
+      });
+    }
   }
 }
