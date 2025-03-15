@@ -1,46 +1,61 @@
 <div class="flex flex-column">
     <span class="text-lg mb-4">Registro</span>
 
-    <mat-form-field>
-        <mat-label>
-            Nombre
-        </mat-label>
-        <input type="text" matInput placeholder="Ingrese su nombre">
-    </mat-form-field>
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="nombre" placeholder="Ingrese su nombre">
+            <mat-error *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched">
+                <span *ngIf="registerForm.get('nombre')?.hasError('required')">El nombre es obligatorio</span>
+                <span *ngIf="registerForm.get('nombre')?.hasError('minlength')">Mínimo 3 caracteres</span>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>
-            Apellidos
-        </mat-label>
-        <input type="text" matInput placeholder="Ingrese su apellido">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input type="text" matInput formControlName="apellidos" placeholder="Ingrese su apellido">
+            <mat-error *ngIf="registerForm.get('apellidos')?.invalid && registerForm.get('apellidos')?.touched">
+                <span *ngIf="registerForm.get('apellidos')?.hasError('required')">Los apellidos son obligatorios</span>
+                <span *ngIf="registerForm.get('apellidos')?.hasError('minlength')">Mínimo 3 caracteres</span>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>
-            Edad
-        </mat-label>
-        <input type="number" matInput placeholder="Ingrese su edad">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Edad</mat-label>
+            <input type="number" matInput formControlName="edad" placeholder="Ingrese su edad">
+            <mat-error *ngIf="registerForm.get('edad')?.invalid && registerForm.get('edad')?.touched">
+                <span *ngIf="registerForm.get('edad')?.hasError('required')">La edad es obligatoria</span>
+                <span *ngIf="registerForm.get('edad')?.hasError('min')">Debe ser mayor de 18 años</span>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>
-            Correo electrónico
-        </mat-label>
-        <input type="email" matInput placeholder="Ingrese su correo electrónico">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ingrese su correo electrónico">
+            <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                <span *ngIf="registerForm.get('email')?.hasError('required')">El correo electrónico es obligatorio</span>
+                <span *ngIf="registerForm.get('email')?.hasError('email')">Correo electrónico no válido</span>
+            </mat-error>
+        </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>
-            Contraseña
-        </mat-label>
-        <input type="password" matInput placeholder="Ingrese su contraseña">
-    </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Ingrese su contraseña">
+            <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                <span *ngIf="registerForm.get('password')?.hasError('required')">La contraseña es obligatoria</span>
+                <span *ngIf="registerForm.get('password')?.hasError('minlength')">Mínimo 6 caracteres</span>
+            </mat-error>
+        </mat-form-field>
 
-    <button mat-button mat-flat-button>
-        <mat-icon>logout</mat-icon>
-        Ingresar
-    </button>
+        <button mat-button mat-flat-button color="primary" type="submit" [disabled]="registerForm.invalid">
+            <mat-icon>login</mat-icon>
+            Registrar
+        </button>
+    </form>
 
     <div class="flex justify-content-end mt-5">
         <a routerLink="/auth/login">¿Ya tienes una cuenta? Inicia sesión</a>
     </div>
+</div>
+
+<
